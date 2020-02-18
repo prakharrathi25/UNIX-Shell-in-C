@@ -23,9 +23,14 @@ while (should_run) {
 
 printf("osh>"); 
 fflush(stdout);
+scanf("%[^\n", scanned_input)
+getchar();
 
 // Take an input and split it into tokens and save them in an array 
-
+if(args[0] == "quit")
+{
+    exit(0); 
+}
 
 /**
 * After reading user input, the steps are:
@@ -100,7 +105,7 @@ void executeMostRecent(int n)
     {
         command = strcat(crt->data, "()")
     }else
-    
+
 }
 
 
