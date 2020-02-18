@@ -3,52 +3,54 @@ ID:
 Teammate name(s): Jaskaran Gujral 
 */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stlib.h> 
-#include <unistad.h> 
+#include<stdio.h>
+#include<unistd.h>
+#include<stdlib.h>
 #include<string.h> 
 
 // CONSTANTS
-#define MAX LINE 80 /* The maximum length command */ 
-char *past_com[10]; /* A command to remeber the last 10 commands */ 
+#define MAX_LINE 80 /* The maximum length command */
+char *past_com[10]; /* A command to remeber the last 10 commands */
 
-// Main Function 
+// Main Function
 int main(void)
 {
 
-char *args[MAX LINE/2 + 1]; /* command line arguments */
-int should_run = 1; /* flag to determine when to exit program */ 
+char *args[MAX_LINE/2 + 1]; /* command line arguments */
+int should_run = 1; /* flag to determine when to exit program */
 while (should_run) {
 
-printf("osh>"); 
-fflush(stdout);
-scanf("%[^\n", scanned_input)
-getchar();
+    char scanned_input[50]; 
+    printf("osh>");
+    fflush(stdout);
+    scanf("%[^\n", scanned_input)
+    getchar();
 
-// Take an input and split it into tokens and save them in an array 
-if(args[0] == "quit")
-{
-    exit(0); 
-}
+    // Take an input and split it into tokens and save them in an array
 
-/**
-* After reading user input, the steps are:
-* (1) fork a child process using fork()
-* (2) the child process will invoke execvp()
-* (3) if command included &, parent will not invoke wait()
-* (4) if command is quit, the shell should exit
-* Explain your steps as comments in the code itself.
-*/
+    // Condition 4
+    if(args[0] == "quit") {
+        exit(0); 
+    }
 
-// Condition 4
+    else {
+        execvp(args[0], args);
+    }
 
+    /**
+    * After reading user input, the steps are:
+    * (1) fork a child process using fork()
+    * (2) the child process will invoke execvp()
+    * (3) if command included &, parent will not invoke wait()
+    * (4) if command is quit, the shell should exit
+    * Explain your steps as comments in the code itself.
+    */
 
-return 0; 
+    return 0;
 }
 
 // Tokenization function: tokenizes the input stream and separates them on " "
-char *tokenize(char string[MAX LINE/2 + 1])
+char *tokenize(char *string, bool ch)
 {
     // Obtain the first token which is the command 
     char *token = strtok(string, " "); 
@@ -70,7 +72,7 @@ char *tokenize(char string[MAX LINE/2 + 1])
 }
 
 // Check for an ampersand
-int checkAmpersand(char string[MAX LINE/2 + 1])
+int checkAmpersand(char string[MAX_LINE/2 + 1])
 {
     char last_arg[50];  
     // 1. Parse to the last argument
@@ -108,7 +110,6 @@ void executeMostRecent(int n)
 
 }
 
-
 // Fork fucntion 
 int fork(int argc, char *argv[])
 {
@@ -139,9 +140,9 @@ void printCurrDir()
     printf("\nDir: %s", cwd); 
 } 
 
-// Help Function in the Shell 
-void openHelp() 
-{ 
+// Help Function in the Shell
+void openHelp()
+{
     puts("\n***WELCOME TO OUR SHELL HELP***"
         "\nCreated by @ Jaskaran and Prakhar"
         "\nList of Commands supported:"
@@ -149,7 +150,7 @@ void openHelp()
         "\n>ls"
         "\n>quit"
         "\ncat"
-        "\n>improper space handling"); 
-  
-    return; 
-} 
+        "\n>improper space handling");
+
+    return;
+}
