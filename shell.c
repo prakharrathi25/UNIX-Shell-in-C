@@ -55,7 +55,7 @@ char *tokenize(char *string, bool ch)
 {
     // Obtain the first token which is the command 
     char *token = strtok(string, " "); 
-    int i = 0; 
+    int i = 0;
     while(token != NULL) // parsing for all the other tokens
     {
         printf("%s\n", token); // printing each token
@@ -69,7 +69,7 @@ char *tokenize(char *string, bool ch)
     printf("The command you entered is: %s", string[0]); 
     
     // Return argument list 
-    return args; 
+    return *args;
 }
 
 // Check for an ampersand
@@ -91,10 +91,10 @@ int execvp(char *command, char *params[])
 void showHistory()
 {
     // Creating a linked list which adds the latest command to the start 
-    i = 1
+    int i = 1;
 
     // Printing the list of top 10 items
-    while( crt != NULL & i <= 10)
+    while(int crt != NULL & i <= 10)
     {
         printf("%s", crt->data); 
         crt = crt->next; 
