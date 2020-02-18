@@ -11,7 +11,10 @@ Teammate name(s): Jaskaran Gujral
 
 // CONSTANTS
 #define MAX_LINE 80 /* The maximum length command */
-char *past_com[10]; /* A command to remeber the last 10 commands */
+
+// Stack for saving the last 10 commands
+int stackPtr = 0; 
+char *past_com[10]; 
 
 // Main Function
 int main(void)
@@ -81,34 +84,39 @@ int main(void)
         // 3. If its an ampersand then return 1 else 0
     }
 
-    // Execute vp command
-    int execvp(char *command, char *params[])
-    {
-
-    }
-
     // Display history
     void showHistory()
     {
-        // Creating a linked list which adds the latest command to the start
-        int i = 1;
-
-        // Printing the list of top 10 items
-        while(crt != NULL & i <= 10)
+        if(stackPtr < 10)
         {
-            printf("%s", crt->data);
-            crt = crt->next;
-            i++;
+            for(int i = stackPtr; i >= 0; i--)
+            {
+                printf("%d %s", i + 1, past_com[i]); 
+            }
+        }else
+        {
+            for(int i = 9; i >= 0; i--)
+            {
+                printf("%d %s", i + 1, past_com[i]); 
+            }
         }
     }
 
-    void executeMostRecent(int n)
+    // Function to display the 
+    void executeRecent(int n)
     {
         if(n == 1)
         {
-            command = strcat(crt->data, "()")
-        }else
+            char *current = past_com[stackPtr]; 
+            char *curr_arg[50] = tokenize(current); 
+            execvp(curr_arg[0], curr_arg); 
 
+        }else if(n > 1)
+        {
+            char *current = past_com[stackPtr - n]; 
+            char *curr_arg[50] = tokenize(current);
+            execvp(curr_arg[0], curr_arg); 
+        }
     }
 
     // Fork fucntion
@@ -154,5 +162,11 @@ int main(void)
             "\n>improper space handling");
 
         return;
+    }
+
+    int getSize(char a[])
+    {
+        int size = sizeof(a)/(sizeof(a[0])); 
+        return size; 
     }
 }
