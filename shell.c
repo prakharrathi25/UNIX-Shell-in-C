@@ -6,7 +6,8 @@ Teammate name(s): Jaskaran Gujral
 #include<stdio.h>
 #include<unistd.h>
 #include<stdlib.h>
-#include<string.h> 
+#include<string.h>
+#include<stdbool.h>
 
 // CONSTANTS
 #define MAX_LINE 80 /* The maximum length command */
@@ -23,7 +24,7 @@ while (should_run) {
     char scanned_input[50]; 
     printf("osh>");
     fflush(stdout);
-    scanf("%[^\n", scanned_input)
+    scanf("%[^\n", scanned_input);
     getchar();
 
     // Take an input and split it into tokens and save them in an array
@@ -61,7 +62,7 @@ char *tokenize(char *string, bool ch)
         args[i] = token; 
         i++; 
 
-        token = strtok(NULL, " ");   // EXPLANATION: @Jaskaran idk why this line is working. PLease figure out. 
+        token = strtok(NULL, " ");   // EXPLANATION: @Jaskaran idk why this line is working. Please figure out.
     }
 
     // Print the command
@@ -113,7 +114,7 @@ void executeMostRecent(int n)
 // Fork fucntion 
 int fork(int argc, char *argv[])
 {
-    // Printing the proces id 
+    // Printing the proces id
     printf("I am a %d\n", (int)getpid()); 
 
     pid_t pid = fork(); 
