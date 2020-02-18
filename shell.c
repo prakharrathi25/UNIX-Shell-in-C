@@ -7,9 +7,11 @@ Teammate name(s): Jaskaran Gujral
 #include <unistd.h>
 #include <stlib.h> 
 #include <unistad.h> 
+#include<string.h> 
 
 // CONSTANTS
 #define MAX LINE 80 /* The maximum length command */ 
+char *past_com[10]; /* A command to remeber the last 10 commands */ 
 
 // Main Function 
 int main(void)
@@ -46,10 +48,15 @@ char *tokenize(char string[MAX LINE/2 + 1])
     // Obtain the first token which is the command 
     char *token = strtok(string, " "); 
     int i = 0; 
-    while(token != NULL)
+    while(token != NULL) // parsing for all the other tokens
     {
-        printf("%s\n", token); //printing each 
+        printf("%s\n", token); // printing each token
+        args[i] = token; 
+        i++; 
+
+        token = strtok(NULL, " ");   // EXPLANATION: @Jaskaran idk why this line is working. PLease figure out. 
     }
+
     // Print the command
     printf("The command you entered is: %s", string[0]); 
     
@@ -57,11 +64,46 @@ char *tokenize(char string[MAX LINE/2 + 1])
     return args; 
 }
 
+// Check for an ampersand
+int checkAmpersand(char string[MAX LINE/2 + 1])
+{
+    char last_arg[50];  
+    // 1. Parse to the last argument
+    // 2. Parse to the last char of the last arg or check for an ampersand anywhere ( might be easier)
+    // 3. If its an ampersand then return 1 else 0 
+}
+
 // Execute vp command
 int execvp(char *command, char *params[])
 {
 
 }
+
+// Display history 
+void showHistory()
+{
+    // Creating a linked list which adds the latest command to the start 
+    i = 1
+
+    // Printing the list of top 10 items
+    while( crt != NULL & i <= 10)
+    {
+        printf("%s", crt->data); 
+        crt = crt->next; 
+        i++; 
+    }
+}
+
+void executeMostRecent(int n)
+{
+    if(n == 1)
+    {
+        command = strcat(crt->data, "()")
+    }else
+    
+}
+
+
 // Fork fucntion 
 int fork(int argc, char *argv[])
 {
