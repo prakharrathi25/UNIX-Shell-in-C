@@ -133,14 +133,6 @@ void executeRecent(int n)
 //     return 0;
 // }
 
-// Function to print Current Directory.
-void printCurrDir()
-{
-    char cwd[1024];
-    getcwd(cwd, sizeof(cwd)); //get current working directory
-    printf("\nDir: %s", cwd);
-}
-
 // Help Function in the Shell
 void openHelp()
 {
