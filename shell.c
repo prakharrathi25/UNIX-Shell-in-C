@@ -11,15 +11,12 @@ Teammate name(s): Jaskaran Gujral
 
 // CONSTANTS
 #define MAX_LINE 80 /* The maximum length command */
-<<<<<<< HEAD
-char *past_com[10]; /* A command to remeber the last 10 commands */
+
 char *args[MAX_LINE/2 + 1]; /* command line arguments */
-=======
 
 // Stack for saving the last 10 commands
 int stackPtr = 0; 
 char *past_com[10]; 
->>>>>>> 6884f376f1cac2ee143bbd43b090afb3d10aaeee
 
 // Main Function
 int main(void)
@@ -58,7 +55,6 @@ int main(void)
     }
 }
 
-<<<<<<< HEAD
 // Tokenization function: tokenizes the input stream and separates them on " "
 char *tokenize(char *string, bool ch)
 {
@@ -88,12 +84,6 @@ int checkAmpersand(char string[MAX_LINE/2 + 1])
     // 1. Parse to the last argument
     // 2. Parse to the last char of the last arg or check for an ampersand anywhere ( might be easier)
     // 3. If its an ampersand then return 1 else 0 
-}
-
-// Execute vp command
-int execvp(char *command, char *params[])
-{
-
 }
 
 // Display history 
@@ -163,7 +153,6 @@ void openHelp()
         "\n>improper space handling");
 
     return;
-=======
     // Tokenization function: tokenizes the input stream and separates them on " "
     char *tokenize(char *string, bool ch)
     {
@@ -280,5 +269,4 @@ void openHelp()
         int size = sizeof(a)/(sizeof(a[0])); 
         return size; 
     }
->>>>>>> 6884f376f1cac2ee143bbd43b090afb3d10aaeee
 }
