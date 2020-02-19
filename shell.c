@@ -79,7 +79,7 @@ int main(void)
         // If an ampersand is found then 
         if(has_ampersand == true && child_pid != 0)
         {
-            wait(); 
+            wait(); // Wait argument and status of the child?? 
         }
 
         /**
@@ -129,14 +129,14 @@ void executeRecent(int n)
 {
     if(n == 1)
     {
-        char *current = past_com[stackPtr]; 
+        char *current = past_com[0]; 
         char *curr_arg[50];
         tokenize(current, curr_arg); 
         execvp(curr_arg[0], curr_arg); 
 
     }else if(n > 1)
     {
-        char *current = past_com[stackPtr - n]; 
+        char *current = past_com[n - 1]; 
         char *curr_arg[50];
         tokenize(current, curr_arg);
         execvp(curr_arg[0], curr_arg); 
