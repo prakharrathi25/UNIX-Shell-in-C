@@ -27,19 +27,35 @@ int main(void)
         char scanned_input[50];
         printf("osh>");
         fflush(stdout);
-        scanf("%[^\n", scanned_input);
+        scanf("%[^\n", scanned_input); // Command + Arguments input stream 
         getchar();
 
-        bool j; 
-        // Take an input and split it into tokens and save them in an array
+        // Variable to check if there is an ampersand at the end
+        bool has_ampersand; 
+
+        // Split the input into tokens and save them in an array
+        tokenize(scanned_input, &has_ampersand); // @jaskaran Second argument is a place holder. add whatever is required
+
+        // Creating the child process id and forking the parent process
+        pid_t child_pid; 
+        child_pid = fork(); 
 
         // Condition 4
-        if(args[0] == "quit") {
+        if(args[0] == "quit") 
+        {
             exit(0);
         }
-
-        else {
+        if(child_pid == 0) 
+        {
             execvp(args[0], args);
+            fprintf (stderr,"an error occured in execvp\n");
+			abort();
+        }
+
+        // If an ampersand is found then 
+        if(has_ampersand == true && child_pid != 0)
+        {
+            wait(); 
         }
 
         /**
@@ -55,27 +71,6 @@ int main(void)
     }
 }
 
-// Tokenization function: tokenizes the input stream and separates them on " "
-// char *tokenize(char *string, bool ch)
-// {
-//     // Obtain the first token which is the command 
-//     char *token = strtok(string, " "); 
-//     int i = 0;
-//     while(token != NULL) // parsing for all the other tokens
-//     {
-//         printf("%s\n", token); // printing each token
-//         args[i] = token; 
-//         i++; 
-
-//         token = strtok(NULL, " ");   // EXPLANATION: @Jaskaran idk why this line is working. Please figure out.
-//     }
-
-//     // Print the command
-//     printf("The command you entered is: %s", string[0]); 
-    
-//     // Return argument list 
-//     return *args;
-// }
 
 // Tokenization function: tokenizes the input stream and separates them on " "
 void tokenize(char *string, char **ret) {
@@ -133,42 +128,6 @@ void executeRecent(int n)
     }
 }
 
-// Fork fucntion
-// int fork(int argc, char *argv[])
-// {
-//     // Printing the proces id
-//     printf("I am a %d\n", (int)getpid());
-
-//     pid_t pid = fork();
-//     if (pid == 0)
-//     {
-//         printf("\nI am a child with pid %d", int getpid())
-//     } else if(pid> 0)
-//     {
-//         printf("\nI am a parent");
-//     } else
-//     {
-//         printf("\nFork Failed!");
-//     }
-//     print("\nFork returned: %d", int(pid))
-//     printf("\nI am a %d\n", (int)getpid())
-//     return 0;
-// }
-
-// Help Function in the Shell
-void openHelp()
-{
-    puts("\n***WELCOME TO OUR SHELL HELP***"
-        "\nCreated by @ Jaskaran and Prakhar"
-        "\nList of Commands supported:"
-        "\n>cd"
-        "\n>ls"
-        "\n>quit"
-        "\ncat"
-        "\n>improper space handling");
-
-    return;
-}
 
 int getSize(char *a)
 {
