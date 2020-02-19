@@ -123,6 +123,7 @@ int main(void)
         // If quit statement is found
         if(args[0] == "quit")
         {
+            should_run = 0; 
             exit(0);
         }
 
@@ -137,10 +138,11 @@ int main(void)
                 executeRecent(1); 
             else
                 executeRecent(args[0][1]); // Executing the nth most recent command 
+        
         } else if(child_pid == 0) 
         {
             execvp(args[0], args);
-            fprintf (stderr,"an error occured in execvp\n");
+            fprintf (stderr,"Back in the parent process\n");
 			abort();
         }
 
