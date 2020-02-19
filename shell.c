@@ -77,7 +77,7 @@ int main(void)
 // }
 
 // Tokenization function: tokenizes the input stream and separates them on " "
-void tokenize(char *string) {
+void tokenize(char *string, char **ret) {
 
     // Obtain the first token which is the command 
     char *token;
@@ -119,13 +119,15 @@ void executeRecent(int n)
     if(n == 1)
     {
         char *current = past_com[stackPtr]; 
-        char *curr_arg[50] = tokenize(current, 0); 
+        char *curr_arg[50];
+        tokenize(current, curr_arg); 
         execvp(curr_arg[0], curr_arg); 
 
     }else if(n > 1)
     {
         char *current = past_com[stackPtr - n]; 
-        char *curr_arg[50] = tokenize(current, 0);
+        char *curr_arg[50];
+        tokenize(current, curr_arg);
         execvp(curr_arg[0], curr_arg); 
     }
 }
