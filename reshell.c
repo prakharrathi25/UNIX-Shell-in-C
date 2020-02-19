@@ -21,9 +21,9 @@ char past_com[10][MAX_LINE];
 void add_into_array(char *string)
 {
         for(int i = 9; i > 0; i--)
-        {
-            
-        }
+            strcpy(past_com[i], past_com[i-1]); 
+        strcpy(past_com[0],string);
+        stackPtr++;  
 }
 int main(){
     int should_run = 1; /* flag to determine when to exit program*/
