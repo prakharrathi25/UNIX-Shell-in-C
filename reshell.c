@@ -40,14 +40,22 @@ int main(){
         } else
         {
             add_into_array(input); 
+            tokenize(); 
         }
 
         pid_t child_pid; 
         child_pid = fork(); 
         if((strcmp(input, "quit")) == 0)
-        {
             exit(0); 
+        if(child_pid == 0)
+        {
+            execvp(args[0], args); 
+            printf("The function returned to the parent process.\n"); 
+            abort(); 
         }
+
+        if(has_ampersand == true && child_pid != 0)
+            wait(); 
     }
 
 }
