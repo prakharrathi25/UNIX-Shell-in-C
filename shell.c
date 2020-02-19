@@ -77,6 +77,22 @@ void executeRecent(int n)
     }
 }
 
+// Function to add the command to the history list 
+void add_to_history(char *string)
+{
+    if(stackPtr < 10)
+        {
+            past_com[stackPtr] = scanned_input; 
+            stackPtr++; 
+        }else if(stackPtr > 9)
+        {
+            stackPtr = 0; 
+            past_com[stackPtr] = scanned_input;
+            stackPtr++;  
+        }
+
+}
+
 // Main Function
 int main(void)
 {
@@ -90,17 +106,8 @@ int main(void)
         scanf("%[^\n]", scanned_input); // Command + Arguments input stream
         getchar();
 
-        // Add the command to the past commands array
-        if(stackPtr < 10)
-        {
-            past_com[stackPtr] = scanned_input; 
-            stackPtr++; 
-        }else if(stackPtr > 9)
-        {
-            stackPtr = 0; 
-            past_com[stackPtr] = scanned_input;
-            stackPtr++;  
-        }
+        // Add the command to the past commands array 
+        add_to_history(scanned_input); 
 
         // Variable to check if there is an ampersand at the end
         bool has_ampersand;
