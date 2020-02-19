@@ -40,12 +40,24 @@ int main(void)
         pid_t child_pid; 
         child_pid = fork(); 
 
-        // Condition 4
+        // If quit statement is found
         if(args[0] == "quit") 
         {
             exit(0);
         }
-        if(child_pid == 0) 
+
+        // Checking for the history feature 
+        if(args[0] == "history")
+        {
+            showHistory(); 
+
+        } else if (args[0][0] == '!')
+        {
+            if(args[0][1] == '!') // Executing the most recent command
+                executeRecent(1); 
+            else
+                executeRecent(args[0][1]); // Executing the nth most recent command 
+        } else if(child_pid == 0) 
         {
             execvp(args[0], args);
             fprintf (stderr,"an error occured in execvp\n");
