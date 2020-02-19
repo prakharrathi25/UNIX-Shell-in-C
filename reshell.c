@@ -17,10 +17,22 @@ char *args[MAX_LINE/2 + 1]; /* command line arguments */
 int stackPtr = 0; 
 char past_com[10][MAX_LINE];
 
-// Addition function 
-void add_into_array(char *s)
+// Add the command to the past commands array
+void add_into_array(char *string)
 {
-    
+        if(stackPtr < 10)
+        {
+            strcpy(past_com[0], string);  
+            stackPtr++; 
+        }
+
+		else if(stackPtr > 9)
+        {
+            stackPtr = 0; 
+            strcpy(past_com[0], string); 
+            stackPtr++;  
+        }
+
 }
 int main(){
     int should_run = 1; /* flag to determine when to exit program*/
