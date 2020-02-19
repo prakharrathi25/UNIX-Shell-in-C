@@ -169,7 +169,7 @@ void openHelp()
     return;
 }
 
-int getSize(char a[])
+int getSize(char *a)
 {
     int size = sizeof(a)/(sizeof(a[0])); 
     return size; 
