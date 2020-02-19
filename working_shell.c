@@ -70,18 +70,10 @@ void executeRecent(int n)
 // Addition function 
 void add_into_array(char *string)
 {
-        if(stackPtr < 10)
-        {
-            past_com[stackPtr] = string; 
-            stackPtr++; 
-        }
-
-		else if(stackPtr > 9)
-        {
-            stackPtr = 0; 
-            past_com[stackPtr] = string;
-            stackPtr++;  
-        }
+        for(int i = 9; i > 0; i--)
+            strcpy(past_com[i], past_com[i-1]); 
+        strcpy(past_com[0],string);
+        stackPtr++;  
 }
 
 // Main Function
@@ -113,7 +105,7 @@ int main(void)
         {
             add_into_array(scanned_input); 
         }
-        
+
         // Add the command to the past commands array
         // if(stackPtr < 10)
         // {
