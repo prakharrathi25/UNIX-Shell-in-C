@@ -43,7 +43,7 @@ bool tokenize(char *string, char **ret) {
 void showHistory()
 {
     for(int i = stackPtr; i >= 0; i--)
-            printf("%d\t%s\n", i + 1, past_com[i]);
+            printf("%d\t %s\n", i + 1, past_com[i]);
 }
 
 // Function to execute the most recent commands
@@ -80,18 +80,20 @@ int main(void)
         scanf("%[^\n]", scanned_input); // Command + Arguments input stream
         getchar();
 
+        // Add the command to the past commands array
         if(stackPtr < 10)
         {
-            strcpy(past_com[0], scanned_input);  
+            past_com[stackPtr] = scanned_input; 
             stackPtr++; 
         }
 
 		else if(stackPtr > 9)
         {
             stackPtr = 0; 
-            strcpy(past_com[0], scanned_input); 
+            past_com[stackPtr] = scanned_input;
             stackPtr++;  
         }
+
         // Variable to check if there is an ampersand at the end
         bool has_ampersand;
 
