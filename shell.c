@@ -77,12 +77,6 @@ void executeRecent(int n)
     }
 }
 
-int getSize(char *a)
-{
-    int size = sizeof(a)/(sizeof(a[0])); 
-    return size; 
-}
-
 // Main Function
 int main(void)
 {
@@ -135,7 +129,9 @@ int main(void)
                 executeRecent(1); 
             else
                 executeRecent(args[0][1]); // Executing the nth most recent command 
-        } else if(child_pid == 0) 
+        } 
+	
+	if(child_pid == 0) 
         {
             execvp(args[0], args);
             fprintf (stderr,"an error occured in execvp\n");
