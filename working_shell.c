@@ -67,6 +67,23 @@ void executeRecent(int n)
     }
 }
 
+// Addition function 
+void add_into_array(char *string)
+{
+        if(stackPtr < 10)
+        {
+            past_com[stackPtr] = string; 
+            stackPtr++; 
+        }
+
+		else if(stackPtr > 9)
+        {
+            stackPtr = 0; 
+            past_com[stackPtr] = string;
+            stackPtr++;  
+        }
+}
+
 // Main Function
 int main(void)
 {
@@ -80,19 +97,36 @@ int main(void)
         scanf("%[^\n]", scanned_input); // Command + Arguments input stream
         getchar();
 
-        // Add the command to the past commands array
-        if(stackPtr < 10)
+        
+        // Checking for the history feature 
+        if(strcmp(scanned_input, "history") == 0)
         {
-            past_com[stackPtr] = scanned_input; 
-            stackPtr++; 
-        }
+            showHistory(); 
 
-		else if(stackPtr > 9)
+        } else if (scanned_input[0] == '!')
         {
-            stackPtr = 0; 
-            past_com[stackPtr] = scanned_input;
-            stackPtr++;  
+            if(scanned_input[1] == '!') // Executing the most recent command
+                executeRecent(1); 
+            else
+                executeRecent(scanned_input[1]); // Executing the nth most recent command 
+        }else
+        {
+            add_into_array(scanned_input); 
         }
+        
+        // Add the command to the past commands array
+        // if(stackPtr < 10)
+        // {
+        //     past_com[stackPtr] = scanned_input; 
+        //     stackPtr++; 
+        // }
+
+		// else if(stackPtr > 9)
+        // {
+        //     stackPtr = 0; 
+        //     past_com[stackPtr] = scanned_input;
+        //     stackPtr++;  
+        // }
 
         // Variable to check if there is an ampersand at the end
         bool has_ampersand;
@@ -110,21 +144,9 @@ int main(void)
             should_run = 0; 
             exit(0);
         }
-
-        // Checking for the history feature 
-        if(strcmp(scanned_input, "history") == 0)
-        {
-            showHistory(); 
-
-        } else if (scanned_input[0] == '!')
-        {
-            if(scanned_input[1] == '!') // Executing the most recent command
-                executeRecent(1); 
-            else
-                executeRecent(scanned_input[1]); // Executing the nth most recent command 
-        }
+        
 	
-		else if(child_pid == 0) 
+		if(child_pid == 0) 
         {
             execvp(args[0], args);
             fprintf (stderr,"an error occured in execvp\n");
