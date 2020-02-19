@@ -65,20 +65,19 @@ void executeRecent(int n)
 {
     if(n == 1)
     {
-        char *current = past_com[stackPtr]; 
+        char *current = past_com[0]; 
         char *curr_arg[50];
         tokenize(current, curr_arg); 
         execvp(curr_arg[0], curr_arg); 
 
     }else if(n > 1)
     {
-        char *current = past_com[stackPtr - n]; 
+        char *current = past_com[n - 1]; 
         char *curr_arg[50];
         tokenize(current, curr_arg);
         execvp(curr_arg[0], curr_arg); 
     }
 }
-
 
 int getSize(char *a)
 {
@@ -96,8 +95,20 @@ int main(void)
         char scanned_input[50];
         printf("osh>");
         fflush(stdout);
-        scanf("%[^\n", scanned_input); // Command + Arguments input stream 
+        scanf("%[^\n]", scanned_input); // Command + Arguments input stream 
         getchar();
+
+        // Add the command to the past commands array
+        if(stackPtr < 10)
+        {
+            past_com[stackPtr] = scanned_input; 
+            stackPtr++; 
+        }else if(stackPtr > 9)
+        {
+            stackPtr = 0; 
+            past_com[stackPtr] = scanned_input;
+            stackPtr++;  
+        }
 
         // Variable to check if there is an ampersand at the end
         bool has_ampersand;
@@ -138,7 +149,7 @@ int main(void)
         // If an ampersand is found then 
         if(has_ampersand == true && child_pid != 0)
         {
-            wait(); 
+            wait(); // Wait argument and status of the child?? 
         }
 
         /**
