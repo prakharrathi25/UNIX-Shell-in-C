@@ -27,8 +27,20 @@ int main(void)
         char scanned_input[50];
         printf("osh>");
         fflush(stdout);
-        scanf("%[^\n", scanned_input); // Command + Arguments input stream 
+        scanf("%[^\n]", scanned_input); // Command + Arguments input stream 
         getchar();
+
+        // Add the command to the past commands array
+        if(stackPtr < 10)
+        {
+            past_com[stackPtr] = scanned_input; 
+            stackPtr++; 
+        }else if(stackPtr > 9)
+        {
+            stackPtr = 0; 
+            past_com[stackPtr] = scanned_input;
+            stackPtr++;  
+        }
 
         // Variable to check if there is an ampersand at the end
         bool has_ampersand; 
@@ -106,19 +118,10 @@ void tokenize(char *string, char **ret) {
 // Display history
 void showHistory()
 {
-    if(stackPtr < 10)
-    {
-        for(int i = stackPtr; i >= 0; i--)
+    for(int i = stackPtr; i >= 0; i--)
         {
             printf("%d %s", i + 1, past_com[i]); 
         }
-    }else
-    {
-        for(int i = 9; i >= 0; i--)
-        {
-            printf("%d %s", i + 1, past_com[i]); 
-        }
-    }
 }
 
 // Function to execute the most recent commands
