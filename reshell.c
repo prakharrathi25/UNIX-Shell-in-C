@@ -16,6 +16,12 @@ char *args[MAX_LINE/2 + 1]; /* command line arguments */
 // Stack for saving the last 10 commands
 int stackPtr = 0; 
 char past_com[10][MAX_LINE];
+
+// Addition function 
+void add_into_array(char *s)
+{
+    
+}
 int main(){
     int should_run = 1; /* flag to determine when to exit program*/
     int arg_no = 0; 

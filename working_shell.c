@@ -43,7 +43,7 @@ bool tokenize(char *string, char **ret) {
 void showHistory()
 {
     for(int i = stackPtr; i >= 0; i--)
-            printf("%d %s", i + 1, past_com[i]);
+            printf("%d\t %s\n", i + 1, past_com[i]);
 }
 
 // Function to execute the most recent commands
