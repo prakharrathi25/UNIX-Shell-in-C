@@ -42,11 +42,7 @@ bool tokenize(char *string, char **ret) {
 // Display history
 void showHistory()
 {
-    if(stackPtr < 10)
-        for(int i = stackPtr; i >= 0; i--)
-            printf("%d %s", i + 1, past_com[i]);
-    else
-        for(int i = 9; i >= 0; i--)
+    for(int i = stackPtr; i >= 0; i--)
             printf("%d %s", i + 1, past_com[i]);
 }
 
