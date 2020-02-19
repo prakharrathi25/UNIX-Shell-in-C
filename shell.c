@@ -55,25 +55,44 @@ int main(void)
 }
 
 // Tokenization function: tokenizes the input stream and separates them on " "
-char *tokenize(char *string, bool ch)
-{
-    // Obtain the first token which is the command 
-    char *token = strtok(string, " "); 
-    int i = 0;
-    while(token != NULL) // parsing for all the other tokens
-    {
-        printf("%s\n", token); // printing each token
-        args[i] = token; 
-        i++; 
+// char *tokenize(char *string, bool ch)
+// {
+//     // Obtain the first token which is the command 
+//     char *token = strtok(string, " "); 
+//     int i = 0;
+//     while(token != NULL) // parsing for all the other tokens
+//     {
+//         printf("%s\n", token); // printing each token
+//         args[i] = token; 
+//         i++; 
 
-        token = strtok(NULL, " ");   // EXPLANATION: @Jaskaran idk why this line is working. Please figure out.
+//         token = strtok(NULL, " ");   // EXPLANATION: @Jaskaran idk why this line is working. Please figure out.
+//     }
+
+//     // Print the command
+//     printf("The command you entered is: %s", string[0]); 
+    
+//     // Return argument list 
+//     return *args;
+// }
+
+// Tokenization function: tokenizes the input stream and separates them on " "
+void tokenize(char *string) {
+
+    // Obtain the first token which is the command 
+    char *token;
+    int i = 0;
+    token = strtok (string," ");
+   
+    while (token != NULL) // parsing for all the other tokens
+    {
+        printf ("%s\n", token); // printing each token
+        args[i++] = token;
+        token = strtok (NULL, " ");
     }
 
     // Print the command
     printf("The command you entered is: %s", string[0]); 
-    
-    // Return argument list 
-    return *args;
 }
 
 // Display history
