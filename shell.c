@@ -106,16 +106,16 @@ int main(void)
         getchar();
 
         // Checking for the history command
-        if(args[0] == "history")
+        if(strcmp(scanned_input, "history") == 0)
         {
             showHistory(); 
 
-        } else if (args[0][0] == '!')
+        } else if (scanned_input[0] == '!')
         {
-            if(args[0][1] == '!') // Executing the most recent command
+            if(scanned_input[0] == '!') // Executing the most recent command
                 executeRecent(1); 
             else
-                executeRecent(args[0][1]); // Executing the nth most recent command 
+                executeRecent(scanned_input[0]); // Executing the nth most recent command 
         } else 
         {
              add_to_history(scanned_input); // Adds the command to the history commands array
@@ -133,7 +133,7 @@ int main(void)
         child_pid = fork();
 
         // If quit statement is found
-        if(args[0] == "quit")
+        if(strcmp(scanned_input, "quit") == 0)
         {
             should_run = 0; 
             exit(0);
