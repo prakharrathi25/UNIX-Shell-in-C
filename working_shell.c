@@ -107,6 +107,7 @@ int main(void)
         // If quit statement is found
         if(strcmp(scanned_input, "quit") == 0)
         {
+            should_run = 0; 
             exit(0);
         }
 
