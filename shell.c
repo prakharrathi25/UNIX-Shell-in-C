@@ -27,7 +27,7 @@ bool tokenize(char *string, char **ret) {
    
     while (token != NULL) // parsing for all the other tokens
     {
-        args[i++] = token;
+        ret[i++] = token;
         token = strtok (NULL, " ");
     }
 
@@ -95,7 +95,7 @@ int main(void)
         char scanned_input[50];
         printf("osh>");
         fflush(stdout);
-        scanf("%[^\n]", scanned_input); // Command + Arguments input stream 
+        scanf("%[^\n]", scanned_input); // Command + Arguments input stream
         getchar();
 
         // Add the command to the past commands array
@@ -113,10 +113,8 @@ int main(void)
         // Variable to check if there is an ampersand at the end
         bool has_ampersand;
 
-        char *arr[50]; // Array of pointers to store tokens
-
         // Split the input into tokens and save them in an array
-        has_ampersand = tokenize(scanned_input, arr); // Tokenize will return true if & is present
+        has_ampersand = tokenize(scanned_input, args); // Tokenize will return true if & is present
 
         // Creating the child process id and forking the parent process
         pid_t child_pid;
@@ -149,7 +147,8 @@ int main(void)
         // If an ampersand is found then 
         if(has_ampersand == true && child_pid != 0)
         {
-            wait(NULL); // Wait argument and status of the child?? 
+            int stat;
+            wait(); // Wait argument and status of the child?? 
         }
 
         /**
