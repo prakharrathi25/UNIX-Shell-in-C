@@ -102,8 +102,7 @@ int main(void)
 
         char scanned_input[50];
         printf("osh>");
-        fflush(stdout);
-        scanf("%[^\n]", scanned_input); // Command + Arguments input stream
+        scanf("%[^\n]", scanned_input); // Command + Arguments input stream (Takes everything before new line char)
         getchar();
 
         // Add the command to the past commands array 
