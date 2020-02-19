@@ -112,10 +112,10 @@ int main(void)
 
         } else if (scanned_input[0] == '!')
         {
-            if(scanned_input[0] == '!') // Executing the most recent command
+            if(scanned_input[1] == '!') // Executing the most recent command
                 executeRecent(1); 
             else
-                executeRecent(scanned_input[0]); // Executing the nth most recent command 
+                executeRecent(scanned_input[1]); // Executing the nth most recent command 
         } else 
         {
              add_to_history(scanned_input); // Adds the command to the history commands array
