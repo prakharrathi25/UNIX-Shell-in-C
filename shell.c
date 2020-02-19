@@ -149,7 +149,7 @@ int main(void)
         // If an ampersand is found then 
         if(has_ampersand == true && child_pid != 0)
         {
-            wait(); // Wait argument and status of the child?? 
+            wait(NULL); // Wait argument and status of the child?? 
         }
 
         /**
