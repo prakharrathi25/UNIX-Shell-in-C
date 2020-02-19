@@ -82,12 +82,12 @@ void add_to_history(char *string)
 {
     if(stackPtr < 10)
         {
-            past_com[stackPtr] = scanned_input; 
+            past_com[stackPtr] = string; 
             stackPtr++; 
         }else if(stackPtr > 9)
         {
             stackPtr = 0; 
-            past_com[stackPtr] = scanned_input;
+            past_com[stackPtr] = string;
             stackPtr++;  
         }
 
@@ -105,8 +105,22 @@ int main(void)
         scanf("%[^\n]", scanned_input); // Command + Arguments input stream (Takes everything before new line char)
         getchar();
 
-        // Add the command to the past commands array 
-        add_to_history(scanned_input); 
+        // Checking for the history command
+        if(args[0] == "history")
+        {
+            showHistory(); 
+
+        } else if (args[0][0] == '!')
+        {
+            if(args[0][1] == '!') // Executing the most recent command
+                executeRecent(1); 
+            else
+                executeRecent(args[0][1]); // Executing the nth most recent command 
+        } else 
+        {
+             add_to_history(scanned_input); // Adds the command to the history commands array
+        }
+            
 
         // Variable to check if there is an ampersand at the end
         bool has_ampersand;
@@ -124,19 +138,6 @@ int main(void)
             should_run = 0; 
             exit(0);
         }
-
-        // Checking for the history feature 
-        if(args[0] == "history")
-        {
-            showHistory(); 
-
-        } else if (args[0][0] == '!')
-        {
-            if(args[0][1] == '!') // Executing the most recent command
-                executeRecent(1); 
-            else
-                executeRecent(args[0][1]); // Executing the nth most recent command 
-        } 
 	
 	if(child_pid == 0) 
         {
