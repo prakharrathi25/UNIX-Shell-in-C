@@ -30,6 +30,7 @@ int main(void)
         scanf("%[^\n", scanned_input);
         getchar();
 
+        bool j; 
         // Take an input and split it into tokens and save them in an array
 
         // Condition 4
