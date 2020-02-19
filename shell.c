@@ -31,8 +31,6 @@ bool tokenize(char *string, char **ret) {
         token = strtok (NULL, " ");
     }
 
-    // Print the command
-    printf("The command you entered is: %s", string[0]);
     --i;
     int j = strlen(ret[i]) - 1;
     if(ret[i][j] == '&')
