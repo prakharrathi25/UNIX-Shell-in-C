@@ -86,16 +86,17 @@ int main(void)
 
         char scanned_input[50];
         printf("osh>");
-        fflush(stdout);
-        scanf("%[^\n]", scanned_input); // Command + Arguments input stream
+        scanf("%[^\n]", scanned_input); // Command + Arguments input stream (Takes everything before new line char)
         getchar();
 
         // Add the command to the past commands array
         if(stackPtr < 10)
         {
             past_com[stackPtr] = scanned_input; 
-            stackPtr++; 
-        }else if(stackPtr > 9)
+            stackPtr++;
+        }
+
+	else if(stackPtr > 9)
         {
             stackPtr = 0; 
             past_com[stackPtr] = scanned_input;
