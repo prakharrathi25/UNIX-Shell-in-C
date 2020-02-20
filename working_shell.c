@@ -127,7 +127,7 @@ int main(void)
 		if(child_pid == 0) 
         {
             execvp(args[0], args);
-            fprintf (stderr,"an error occured in execvp\n");
+            fprintf (stderr,"Error in executing the command\n"); // The process returned
 			abort();
         }
 
