@@ -14,34 +14,74 @@ Teammate name(s): Jaskaran Gujral
 char *args[MAX_LINE/2 + 1]; /* command line arguments */
 
 // Stack for saving the last 10 commands
+int argCount = 0; 
 int stackPtr = 0; 
 char past_com[10][MAX_LINE];
 
 // Add the command to the past commands array
 void add_into_array(char *string)
 {
-        for(int i = 9; i > 0; i--)
-            strcpy(past_com[i], past_com[i-1]); 
-        strcpy(past_com[0],string);
-        stackPtr++;  
+    if(stackPtr > 9)
+    {
+        stackPtr = 0; 
+        strcpy(past_com[stackPtr], string); 
+    }
+    else
+        strcpy(past_com[stackPtr], string);
 }
+
+// History function 
+void showHistory()
+{
+    if(argCount == 0)
+        printf("No command in the history"); 
+    else
+    {
+        printf("These are the functions that you have used. \n"); 
+        for(int i = 0; i <= stackPtr; i++)
+            printf("%d\t %s\n", argCount - stackPtr + i, past_com[i]);
+    }
+    
+}
+
+// Tokenization function: tokenizes the input stream and separates them on " "
+bool tokenize(char *string, char **ret) {
+
+    // Obtain the first token which is the command 
+    char *token;
+    int i = 0;
+    token = strtok (string," ");
+   
+    while (token != NULL) // parsing for all the other tokens
+    {
+        ret[i++] = token;
+        token = strtok (NULL, " ");
+    }
+
+    --i;
+    int j = strlen(ret[i]) - 1;
+    if(ret[i][j] == '&')
+        return true;
+    else
+        return false;
+}
+
 int main(){
     int should_run = 1; /* flag to determine when to exit program*/
     int arg_no = 0; 
     while (should_run)
-    {
-        int i = 0; 
+    { 
         char input[MAX_LINE]; 
         char *arg; 
         printf("osh>"); 
-
+        fflush(stdout); 
         scanf("%[^\n]", input); 
         getchar(); 
         bool has_ampersand = 0;
 
         if(strcmp(input, "history") == 0)
         {
-            /* Do something */ 
+            showHistory(); 
         }
         if(input[0] == '!')
         {
@@ -59,12 +99,14 @@ int main(){
         if(child_pid == 0)
         {
             execvp(args[0], args); 
-            printf("The function returned to the parent process.\n"); 
+            printf("Error executing the command.\n"); 
             abort(); 
         }
 
-        if(has_ampersand == true && child_pid != 0)
+        if(has_ampersand == true)
             wait(); 
     }
 
 }
+
+
