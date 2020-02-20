@@ -31,6 +31,7 @@ bool tokenize(char *string, char **ret) {
         token = strtok (NULL, " ");
     }
 
+    // Check for ampersand in the last argument 
     --i;
     int j = strlen(ret[i]) - 1;
     if(ret[i][j] == '&')
