@@ -133,7 +133,7 @@ int main(void)
         }
 
         // If an ampersand is found then 
-        if(has_ampersand == true && child_pid != 0)
+        if(has_ampersand == true)
         {
             int stat;
             wait(); 
