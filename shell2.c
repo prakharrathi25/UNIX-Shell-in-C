@@ -89,55 +89,67 @@ int main(void){
 		// Variable to check if there is an ampersand at the end
 		bool has_ampersand;
 
+		// Checking for the history command 
 		if(strcmp(scanned_input, "history") == 0)
 		{
 			show_history(); 
 			continue; 
 		}
 
+		// Executing the most recent commands
 		if(scanned_input[0]=='!')
 		{
 			if(argCount == 0)
 			{
-			printf("Sorry, No arguments till now\n");
+			printf("No recent arguments to execute\n");
 			continue;
 			}
-			if(scanned_input[1]=='!')
+			if(scanned_input[1]=='!') // !! Case : Execute most recent 
 			{
 				add_into_arr(past_com[0]);
-				char s1[MAX_LINE];
-				strcpy(s1,past_com[0]);
-				tokenize(s1,args,&has_ampersand);
+				char com[MAX_LINE];
+				strcpy(com,past_com[0]);
+				tokenize(com,args,&has_ampersand);
 			}
 			else
 			{
+				// Nth number for which the command has to be executes
 				int n = scanned_input[1] - 48;
-				if(n >= 11 && n <= 0)
+				if(n >= 11 || n <= 0)
 				{
-				printf("Not an Allowed operation\n");
+				printf("Only 10 commands can be displayed\n");
 					continue;
 				}
 				add_into_arr(past_com[n]);
-				char s1[MAX_LINE];
-				strcpy(s1,past_com[n]);
-				tokenize(s1,args,&has_ampersand);
+				char com[MAX_LINE];
+				strcpy(com,past_com[n]);
+				tokenize(com,args,&has_ampersand);
 			}
 		}
 		else
 		{	
 			add_into_arr(scanned_input);
+
+			// Split the input into tokens and save them in an array
 			tokenize(scanned_input,args,&has_ampersand);
 		}
+
+		// Creating the child process id and forking the parent process
 		pid_t child_pid;
 		child_pid = fork();
+
+		// If the quit statement is found 
 		if(strcmp(*(args),"quit")==0)
 			exit(0);
+
 		if(child_pid==0)
 		{
 			execvp(args[0], args);
 			fprintf (stderr,"an error occured in execvp\n");
 			abort();
 		}
+
+		// If an ampersand is found 
 		if(has_ampersand==true&&child_pid!=0)
 			wait();
 	}
