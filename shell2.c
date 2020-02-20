@@ -56,6 +56,21 @@ void tokenize(char *s, char **args,bool *j)
 	}
 }
 
+// Displaying the last 10 commands 
+show_history()
+{
+	if(argCount == 0)
+	{
+		printf("No command has been entered so far.\n");
+		// continue;
+	}else{
+		for(int i = 0; i < argCount; i++)
+		{ 
+			printf("%d\t%s\n", argCount - i, past_com[i]);
+		}
+		// continue;
+	}
+}
 // Main Function 
 int main(void){
 
@@ -76,16 +91,8 @@ int main(void){
 
 		if(strcmp(scanned_input, "history") == 0)
 		{
-			if(argCount == 0)
-			{
-				printf("No command has been entered so far.\n");
-				continue;
-			}
-			for(int i = 0; i < argCount; i++)
-			{ 
-				printf("%d\t%s\n", i + 1,past_com[i]);
-			}
-			continue;
+			show_history(); 
+			continue; 
 		}
 
 		if(scanned_input[0]=='!')
