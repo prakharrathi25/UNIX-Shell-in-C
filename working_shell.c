@@ -106,20 +106,6 @@ int main(void)
             add_into_array(scanned_input); 
         }
 
-        // Add the command to the past commands array
-        // if(stackPtr < 10)
-        // {
-        //     past_com[stackPtr] = scanned_input; 
-        //     stackPtr++; 
-        // }
-
-		// else if(stackPtr > 9)
-        // {
-        //     stackPtr = 0; 
-        //     past_com[stackPtr] = scanned_input;
-        //     stackPtr++;  
-        // }
-
         // Variable to check if there is an ampersand at the end
         bool has_ampersand;
 
