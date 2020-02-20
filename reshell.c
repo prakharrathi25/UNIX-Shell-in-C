@@ -44,6 +44,30 @@ void showHistory()
     
 }
 
+void executeMostRecent(int n)
+{
+   if(argCount == 0)
+        printf("No recent commmands found\n"); 
+    else
+    {
+        if(n == 1)
+        {
+            char current[MAX_LINE];
+            strcpy(current, past_com[0]); 
+            char curr_arg[10][MAX_LINE];
+            tokenize(current, curr_arg); 
+            execvp(curr_arg[0], curr_arg);
+        }else if(n > 1)
+        {
+            char current[MAX_LINE];
+            strcpy(current, past_com[n-1]); 
+            char curr_arg[10][MAX_LINE]; 
+            tokenize(current, curr_arg);
+            execvp(curr_arg[0], curr_arg); 
+        }
+        
+}
+
 // Tokenization function: tokenizes the input stream and separates them on " "
 bool tokenize(char *string, char **ret) {
 
