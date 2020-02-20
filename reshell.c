@@ -113,7 +113,7 @@ int main(){
         } else
         {
             add_into_array(input); 
-            tokenize(); 
+            // tokenize(); 
         }
 
         pid_t child_pid; 
