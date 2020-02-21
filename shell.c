@@ -8,160 +8,159 @@ Teammate name(s): Jaskaran Gujral
 #include<stdlib.h>
 #include<string.h>
 #include<stdbool.h>
+#include <sys/types.h>
 
 // CONSTANTS
 #define MAX_LINE 80 /* The maximum length command */
-char *args[MAX_LINE/2 + 1]; /* command line arguments */
 
-// Stack for saving the last 10 commands
-int stackPtr = 0; 
-char *past_com[10];
+// Array for saving the last 10 commands
+char past_com[10][MAX_LINE];
+int argCount = 0;
+
+// Adding the commands to the past commands array
+void add_into_arr(char *string) {
+for (int i = 9; i > 0; i--)
+    strcpy(past_com[i], past_com[i-1]);
+       
+strcpy(past_com[0], string);
+        argCount++;
+    if(argCount>10)
+{
+    argCount=10;
+    }
+}
 
 // Tokenization function: tokenizes the input stream and separates them on " "
-bool tokenize(char *string, char **ret) {
-
-    // Obtain the first token which is the command 
-    char *token;
-    int i = 0;
-    token = strtok (string," ");
-   
-    while (token != NULL) // parsing for all the other tokens
-    {
-        ret[i++] = token;
-        token = strtok (NULL, " ");
-    }
-
-    --i;
-    int j = strlen(ret[i]) - 1;
-    if(ret[i][j] == '&')
-        return true;
-    else
-        return false;
-    
-}
-
-// Display history
-void showHistory()
+bool tokenize(char *string, char **ret)
 {
-    if(stackPtr < 10)
-    {
-        for(int i = stackPtr; i >= 0; i--)
-        {
-            printf("%d %s", i + 1, past_com[i]); 
-        }
-    }else
-    {
-        for(int i = 9; i >= 0; i--)
-        {
-            printf("%d %s", i + 1, past_com[i]); 
-        }
-    }
-}
-
-// Function to execute the most recent commands
-void executeRecent(int n)
+int i = 0;
+bool ampersand;
+char *arr[41] ;
+arr[0] = strtok(string, " ");
+while(arr[i] != NULL)
 {
-    if(n == 1)
-    {
-        char *current = past_com[0]; 
-        char *curr_arg[50];
-        tokenize(current, curr_arg); 
-        execvp(curr_arg[0], curr_arg); 
-
-    }else if(n > 1)
-    {
-        char *current = past_com[n - 1]; 
-        char *curr_arg[50];
-        tokenize(current, curr_arg);
-        execvp(curr_arg[0], curr_arg); 
-    }
+ret[i] = arr[i];
+arr[++i] = strtok(NULL, " ");
 }
-
-// Function to add the command to the history list 
-void add_to_history(char *string)
+char arr1[10];
+strcpy(arr1, ret[i - 1]);
+arr[i] = strtok(ret[i-1],"&");
+if(strcmp(arr[i], arr1) == 0)
 {
-    if(stackPtr < 10)
-        {
-            past_com[stackPtr] = string; 
-            stackPtr++; 
-        }else if(stackPtr > 9)
-        {
-            stackPtr = 0; 
-            past_com[stackPtr] = string;
-            stackPtr++;  
-        }
-
+ret[i] = NULL;
+ampersand = true;
+}
+else
+{
+ret[i-1] = arr[i];
+ret[i] = NULL;
+ampersand = false;
+}
+return ampersand;
 }
 
+// Displaying the last 10 commands
+void show_history()
+{
+if(argCount == 0)
+{
+printf("No command has been entered so far.\n");
+// continue;
+}else{
+for(int i = 0; i < argCount; i++)
+{
+printf("%d\t%s\n", argCount - i, past_com[i]);
+}
+// continue;
+}
+}
 // Main Function
-int main(void)
+int main(void){
+
+char *args[MAX_LINE/2 + 1]; /* command line arguments */
+int should_run = 1; /* flag to determine when to exit program*/
+while (should_run)
 {
 
-    int should_run = 1; /* flag to determine when to exit program */
-    while (should_run) {
-
-        char scanned_input[50];
-        printf("osh>");
-        scanf("%[^\n]", scanned_input); // Command + Arguments input stream (Takes everything before new line char)
+char scanned_input[50];
+char *arg;
+printf("osh>");
+fflush(stdout);
+scanf("%[^\n]", scanned_input); // Command + Arguments input stream
         getchar();
+       
+// Variable to check if there is an ampersand at the end
+bool has_ampersand;
 
-        // Checking for the history command
-        if(strcmp(scanned_input, "history") == 0)
-        {
-            showHistory(); 
+// Checking for the history command
+if(strcmp(scanned_input, "history") == 0)
+{
+show_history();
+continue;
+}
 
-        } else if (scanned_input[0] == '!')
-        {
-            if(scanned_input[1] == '!') // Executing the most recent command
-                executeRecent(1); 
-            else
-                executeRecent(scanned_input[1]); // Executing the nth most recent command 
-        } else 
-        {
-             add_to_history(scanned_input); // Adds the command to the history commands array
-        }
-            
+// Executing the most recent commands
+if(scanned_input[0]=='!')
+{
+if(argCount == 0)
+{
+printf("No recent arguments to execute\n");
+continue;
+}
+if(scanned_input[1]=='!') // !! Case : Execute most recent
+{
+add_into_arr(past_com[0]);
+char s1[MAX_LINE];
+strcpy(s1,past_com[0]);
+has_ampersand = tokenize(s1,args);
+char com[MAX_LINE];
+strcpy(com,past_com[0]);
+has_ampersand = tokenize(com,args);
+}
+else
+{
+// Nth number for which the command has to be executes
+int n = scanned_input[1] - 48;
+if(n >= 11 || n <= 0)
+{
+printf("Only 10 commands can be displayed\n");
+continue;
+}
+add_into_arr(past_com[n]);
+char s1[MAX_LINE];
+strcpy(s1,past_com[n]);
+has_ampersand = tokenize(s1,args);
+char com[MAX_LINE];
+strcpy(com,past_com[n]);
+has_ampersand = tokenize(com,args);
+}
+}
+else
+{
+add_into_arr(scanned_input);
+has_ampersand = tokenize(scanned_input,args);
 
-        // Variable to check if there is an ampersand at the end
-        bool has_ampersand;
+// Split the input into tokens and save them in an array
+has_ampersand = tokenize(scanned_input,args);
+}
 
-        // Split the input into tokens and save them in an array
-        has_ampersand = tokenize(scanned_input, args); // Tokenize will return true if & is present
+// Creating the child process id and forking the parent process
+pid_t child_pid;
+child_pid = fork();
 
-        // Creating the child process id and forking the parent process
-        pid_t child_pid;
-        child_pid = fork();
+// If the quit statement is found
+if(strcmp(*(args),"quit")==0)
+exit(0);
 
-        // If quit statement is found
-        if(strcmp(scanned_input, "quit") == 0)
-        {
-            should_run = 0; 
-            exit(0);
-        }
-	
-	if(child_pid == 0) 
-        {
-            execvp(args[0], args);
-            fprintf (stderr,"Back in the parent process\n");
-			abort();
-        }
+if(child_pid == 0)
+{
+execvp(args[0], args);
+fprintf (stderr,"an error occured in execvp\n");
+abort();
+}
 
-        // If an ampersand is found then 
-        if(has_ampersand == true && child_pid != 0)
-        {
-            int stat;
-            wait(); // Wait argument and status of the child?? 
-        }
-
-        /**
-        * After reading user input, the steps are:
-        * (1) fork a child process using fork()
-        * (2) the child process will invoke execvp()
-        * (3) if command included &, parent will not invoke wait()
-        * (4) if command is quit, the shell should exit
-        * Explain your steps as comments in the code itself.
-        */
-
-        return 0;
-    }
+// If an ampersand is found
+if(has_ampersand == true)
+wait();
+}
 }
