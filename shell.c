@@ -188,4 +188,5 @@ int main(void){
 		if(has_ampersand == false)
 			wait(NULL);
 	}
+	return 0;
 }
