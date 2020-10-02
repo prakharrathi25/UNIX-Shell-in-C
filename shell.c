@@ -13,7 +13,7 @@ SNU ID: 1810110169
 #include<stdbool.h>
 #include<sys/types.h>
 #include<sys/wait.h>
-
+#include<limits.h>
 // CONSTANTS
 #define MAX_LINE 80 // The maximum length command
 
@@ -79,16 +79,21 @@ void show_history() {
 
 // Main Function 
 int main(void){
+	 
 
 	char *args[MAX_LINE/2 + 1]; // Command line arguments
 	int should_run = 1; // Flag to determine when to exit program
 	
 	while (should_run) {
-
+		char cwd[PATH_MAX];
+		getcwd(cwd, sizeof(cwd));
 		char scanned_input[50];
 		char *arg;
-
-		printf("\nosh>"); 
+		
+		printf("\033[1;31m");
+		printf("\n%s\n",cwd); 
+		printf("\033[0m");
+		printf("osh>");
 		fflush(stdout);
 		scanf("%[^\n]", scanned_input); // Command + Arguments input stream
         getchar();
@@ -183,4 +188,5 @@ int main(void){
 		if(has_ampersand == false)
 			wait(NULL);
 	}
+	return 0;
 }
